@@ -1,3 +1,4 @@
+// src/Canvas.js
 import React, { useRef, useEffect } from "react";
 
 function Canvas({ onPredict }) {
@@ -6,6 +7,7 @@ function Canvas({ onPredict }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    // Set white background
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }, []);
