@@ -1,0 +1,95 @@
+import React, { useState, useEffect } from "react";
+import Canvas from "./drawing-classifier/src/Canvas";
+import * as tf from "@tensorflow/tfjs";
+import * as tfvis from "@tensorflow/tfjs-vis"; // optional for visualization
+
+function App() {
+  const [model, setModel] = useState(null);
+  const [predictions, setPredictions] = useState([]);
+  
+  // 1. Load MNIST data and train a simple model on mount
+  useEffect(() => {
+    async function trainModel() {
+      // Load MNIST data (simplified approach)
+      const mnist = await fetch(
+        "https://storage.googleapis.com/tfjs-testing/tfjs-mnist/train-images-idx3-ubyte"
+      ).then((r) => r.arrayBuffer());
+      // ...you would load and preprocess data (omitted for brevity)...
+
+      // Create a simple model
+      const tempModel = tf.sequential();
+      // Example layers (simplified)
+      tempModel.add(tf.layers.conv2d({
+        inputShape: [28, 28, 1],
+        filters: 16,
+        kernelSize: 3,
+        activation: "relu"
+      }));
+      tempModel.add(tf.layers.flatten());
+      tempModel.add(tf.layers.dense({ units: 10, activation: "softmax" }));
+      tempModel.compile({
+        optimizer: "adam",
+        loss: "categoricalCrossentropy",
+        metrics: ["accuracy"],
+      });
+
+      // Train the model with MNIST data (placeholder steps)...
+
+      // For demonstration, we skip real training.
+      // You'd do something like:
+      // await tempModel.fit(trainXs, trainLabels, { epochs: 5, ... });
+
+      setModel(tempModel);
+    }
+
+    trainModel();
+  }, []);
+
+  // 2. Predict on canvas data
+  const handlePredict = async (imageData) => {
+    if (!model) return;
+
+    // Convert canvas image to 28x28 grayscale
+    const inputTensor = preprocessCanvas(imageData);
+
+    // Model prediction
+    const preds = model.predict(inputTensor);
+    const values = preds.arraySync()[0];
+
+    // Show top-guess
+    const topPrediction = values
+      .map((prob, index) => ({ label: index, probability: prob }))
+      .sort((a, b) => b.probability - a.probability);
+
+    setPredictions(topPrediction.slice(0, 3));
+    preds.dispose();
+    inputTensor.dispose();
+  };
+
+  const preprocessCanvas = (imageData) => {
+    // Convert to grayscale, resize to 28x28, normalize
+    // This is just a rough placeholder
+    return tf.tidy(() => {
+      let tensor = tf.browser.fromPixels(imageData, 1); // Grayscale
+      tensor = tf.image.resizeBilinear(tensor, [28, 28]);
+      tensor = tensor.div(255.0).expandDims(0);
+      return tensor;
+    });
+  };
+
+  return (
+    <div className="App">
+      <h1>MNIST Drawing Classifier</h1>
+      <Canvas onPredict={handlePredict} />
+      <ul>
+        {predictions.map((p, idx) => (
+          <li key={idx}>
+            {p.label}: {(p.probability * 100).toFixed(2)}%
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;

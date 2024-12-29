@@ -1,0 +1,195 @@
+Chanikya5793: hello there. today you are my senior developer. 
+
+
+we are going to develop a react js interface where on the white canvas user wll be drawing numbers and shapes. while we train our tensor flow js on custom shapes like squares, rectangle, clock, tree and number.
+
+the interface should show the probabilities for each shape drawn in comparision to similar shapes like if 1 is drawn its 80% probable that 1 and 20% that its 7. 
+
+so finally we are using react.js and tensorflow.js
+
+Help me in coding this whole thing and also setting up the environment
+
+GitHub Copilot: **Plan**  
+1. Create a new React app.  
+2. Install TensorFlow.js.  
+3. Create a canvas component to capture user drawings.  
+4. Set up a simple model or a placeholder to show probabilities.  
+5. Show predictions for the drawn shape or number.
+
+Below is an example setup:
+
+```bash
+
+
+npx create-react-app drawing-classifier
+cd drawing-classifier
+npm install @tensorflow/tfjs
+```
+
+```javascript
+
+
+import React, { useState } from "react";
+import "./App.css";
+import Canvas from "./Canvas";
+import * as tf from "@tensorflow/tfjs";
+
+function App() {
+  const [predictions, setPredictions] = useState([]);
+
+  const handlePredict = async (imageData) => {
+    // Placeholder: Use a loaded model, pass imageData as input
+    // Simulate probabilities
+    const fakePredictions = [
+      { label: "1", probability: 0.8 },
+      { label: "7", probability: 0.2 },
+      // ...other predictions
+    ];
+    setPredictions(fakePredictions);
+  };
+
+  return (
+    <div className="App">
+      <h1>Drawing Classifier</h1>
+      <Canvas onPredict={handlePredict} />
+      <ul>
+        {predictions.map((pred, i) => (
+          <li key={i}>
+            {pred.label}: {(pred.probability * 100).toFixed(2)}%
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+```
+
+```javascript
+
+
+import React, { useRef, useEffect } from "react";
+
+function Canvas({ onPredict }) {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }, []);
+
+  const startDrawing = (e) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    canvas.isDrawing = true;
+  };
+
+  const draw = (e) => {
+    if (!canvasRef.current.isDrawing) return;
+    const ctx = canvasRef.current.getContext("2d");
+    ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.stroke();
+  };
+
+  const stopDrawing = () => {
+    const canvas = canvasRef.current;
+    canvas.isDrawing = false;
+    if (onPredict) {
+      // Convert canvas to image data
+      const imageData = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
+      onPredict(imageData);
+    }
+  };
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={300}
+      height={300}
+      style={{ border: "1px solid #000" }}
+      onMouseDown={startDrawing}
+      onMouseMove={draw}
+      onMouseUp={stopDrawing}
+      onMouseLeave={stopDrawing}
+    />
+  );
+}
+
+export default Canvas;
+```
+
+Run the app:
+```bash
+
+
+npm start
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+🚀 Internship Opportunity for VR SIDDHARTHA ENGINEERING COLLEGE BTech Students 🚀
+AIMER Society – Shaping the Future of Technology!
+
+AIMER Society is offering a 4-month unpaid internship exclusively for VR Siddhartha Engineering College BTech students in the fields of React JS, Full Stack Development, AI, and Machine Learning.
+
+Internship Details:
+Position: Internship in Web Development (React JS, Full Stack), AI, and ML
+Duration: 4 months
+Location: Work-from-home
+Time Commitment: Minimum 5 hours/day
+Stipend: Basic stipend based on performance (no commitment)
+Skills Required:
+Strong foundation in React JS and JavaScript
+Understanding of Full Stack Development
+Familiarity with AI and Machine Learning
+Knowledge of using AI tools like ChatGPT and similar platforms
+Selection Task:
+Task 1: Build a Live Handwritten Digit Recognition App using React JS and TensorFlow.js.
+
+Objective: Train a machine learning model on the MNIST dataset (handwritten digits) and enable live number recognition on a web-based canvas. The app should allow users to draw numbers and immediately detect the drawn number with a confidence probability.
+Key Features:
+Live training of a model using the MNIST dataset.
+Real-time inferencing: As users draw numbers on a canvas, the app should predict the number drawn and display the prediction with confidence.
+Clear button to reset the canvas for new input.
+Work on both front-end (React JS) and AI (TensorFlow.js) integration.
+Submission Instructions:
+Create a video of your app demonstrating the task functionality:
+Show how you draw a digit on the canvas.
+Display the live prediction and confidence score.
+Explain the process and the tech stack used (React JS and TensorFlow.js).
+
+Deadline: Send the video before January 4th, 2025 to be considered for selection.
+Send your video to WhatsApp: 9618222220.
+
+Deadline:
+Submit your video before January 4th, 2025 to get selected for the internship.
+Don’t miss this opportunity to enhance your skills and work on exciting technologies with AIMER Society! 💡
