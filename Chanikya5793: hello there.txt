@@ -193,3 +193,108 @@ Send your video to WhatsApp: 9618222220.
 Deadline:
 Submit your video before January 4th, 2025 to get selected for the internship.
 Don’t miss this opportunity to enhance your skills and work on exciting technologies with AIMER Society! 💡
+
+
+
+
+
+
+
+
+### Step-by-Step Plan
+
+1. Separate model training and serving
+2. Save trained model
+3. Load saved model instead of training each time
+4. Structure for persistence
+
+### Implementation
+
+1. Create model training script:
+
+```javascript
+const tf = require('@tensorflow/tfjs-node');
+const fs = require('fs');
+
+async function trainAndSaveModel() {
+    // Load MNIST data
+    const data = await loadMNISTData();
+    
+    // Create and train model
+    const model = await createModel();
+    await model.fit(data.trainXs, data.trainYs, {
+        epochs: 10,
+        validationData: [data.testXs, data.testYs]
+    });
+    
+    // Save model
+    await model.save('file://./public/model');
+    console.log('Model trained and saved!');
+}
+
+trainAndSaveModel();
+```
+
+2. Update index.js to load saved model:
+
+```javascript
+window.model = null;
+
+async function loadModel() {
+    try {
+        const status = document.getElementById('status');
+        status.textContent = 'Loading pre-trained model...';
+        
+        // Load saved model
+        window.model = await tf.loadLayersModel('/model/model.json');
+        status.textContent = 'Model ready!';
+        
+        // Enable drawing
+        document.getElementById('drawingCanvas').style.display = 'block';
+        document.getElementById('clearButton').style.display = 'block';
+    } catch (error) {
+        console.error('Error loading model:', error);
+        status.textContent = 'Error loading model';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadModel);
+```
+
+3. Update package.json:
+
+```json
+{
+  "scripts": {
+    "train": "node src/train.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "express": "^4.18.2"
+  }
+}
+```
+
+### Usage
+
+1. Train model once:
+```bash
+cd mnist-tfjs
+npm install
+npm run train
+```
+
+2. Start server (uses saved model):
+```bash
+npm start
+```
+
+Benefits:
+- Train once, use many times
+- Faster startup
+- Less browser resource usage
+- Better user experience
+- No repeated training
+
+The saved model will be in `public/model/` directory and served statically by Express.
