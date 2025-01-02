@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MNIST Drawing Recognition</title>
     <!-- Add tfjs dependencies first -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
@@ -54,12 +56,19 @@
         <div id="status">Model Status: Loading...</div>
         <canvas id="drawingCanvas" width="280" height="280"></canvas>
         <div>
-            <button id="clearButton">Clear Canvas</button>
+            <button id="clearButton" type="button">Clear Canvas</button>
         </div>
         <div id="predictions" class="prediction-list"></div>
     </div>
-    <!-- Change script order -->
-    <script src="/src/index.js"></script>
-    <script src="/src/draw.js"></script>
+    <script>
+        // Determine base path
+        const basePath = window.location.pathname.startsWith('/Tensorflow/') ? '/Tensorflow/' : '/';
+        // Set base href
+        const base = document.createElement('base');
+        base.href = basePath;
+        document.head.appendChild(base);
+    </script>
+    <script src="src/index.js"></script>
+    <script src="src/draw.js"></script>
 </body>
 </html>

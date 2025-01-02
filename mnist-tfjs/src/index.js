@@ -6,8 +6,8 @@ async function loadModel() {
         const status = document.getElementById('status');
         status.textContent = 'Model Status: Loading pre-trained model...';
         
-        // Load the model from /model directory
-        window.model = await tf.loadLayersModel('/model/model.json');
+        // Load the model from the relative /model directory
+        window.model = await tf.loadLayersModel('model/model.json');
         console.log('Model loaded successfully');
         
         status.textContent = 'Model Status: Ready';
