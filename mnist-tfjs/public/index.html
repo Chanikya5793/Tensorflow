@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MNIST Drawing Recognition</title>
+    <!-- Add tfjs dependencies first -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1/dist/tfjs-vis.umd.min.js"></script>
+    <!-- Rest of the file remains the same -->
+    <!-- Rest of your styles remain the same -->
+    <style>
+        canvas {
+            border: 2px solid #000;
+            margin: 20px;
+            cursor: crosshair;
+        }
+        .container {
+            text-align: center;
+            margin: 20px auto;
+        }
+        #prediction {
+            font-size: 24px;
+            margin: 20px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        #status {
+            color: #666;
+            font-size: 18px;
+            margin: 10px;
+        }
+        .prediction-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 5px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Draw a digit (0-9)</h1>
+        <div id="status">Model Status: Loading...</div>
+        <canvas id="drawingCanvas" width="280" height="280"></canvas>
+        <div>
+            <button id="clearButton">Clear Canvas</button>
+        </div>
+        <div id="predictions" class="prediction-list"></div>
+    </div>
+    <!-- Change script order -->
+    <script src="/src/index.js"></script>
+    <script src="/src/draw.js"></script>
+</body>
+</html>
