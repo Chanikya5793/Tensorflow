@@ -13,16 +13,21 @@ function App() {
       try {
         setStatus('Loading model from TensorFlow.js server...');
         
-        // Add cache-busting query parameter
-        const modelUrl = 'http://localhost:3000/model/model.json?v=' + Date.now();
-        const loadedModel = await tf.loadLayersModel(modelUrl);
+        // Dynamic model URL based on hostname
+        const modelUrl = '/Tensorflow/model/model.json';
+        
+        console.log('Attempting to load model from:', modelUrl);
+        
+        // Add cache-busting parameter
+        const fullUrl = `${modelUrl}?v=${Date.now()}`;
+        const loadedModel = await tf.loadLayersModel(fullUrl);
         
         console.log('Model loaded successfully');
         setModel(loadedModel);
         setStatus('Model ready');
       } catch (error) {
         console.error('Error loading model:', error);
-        setStatus('Error loading model - Check if TensorFlow.js server is running on port 3000');
+        setStatus('Error loading model. If using an ad blocker, please disable it for this site.');
       }
     }
     loadModel();
