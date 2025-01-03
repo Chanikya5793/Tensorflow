@@ -2,8 +2,11 @@
 
 This website predicts the number drawn on the canvas
 
-the websitecan be accessed at: https://photos.chanakyachowdary.in/Tensorflow
+Front end app built on React and running on a docker container with production build
 
+the website can be accessed at: https://photos.chanakyachowdary.in/React
+
+if the above doesnt work try:   https://photos.chanakyachowdary.in/Tensorflow  its just a simple html page to check and debug issues with tensorflow model and server and it should work fine if model loading error occured on the React App site
 
 Small note:
 
