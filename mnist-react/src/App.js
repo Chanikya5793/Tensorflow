@@ -11,23 +11,14 @@ function App() {
   useEffect(() => {
     async function loadModel() {
       try {
-        setStatus('Loading model from TensorFlow.js server...');
-        
-        // Dynamic model URL based on hostname
+        // Use the proxied path
         const modelUrl = '/Tensorflow/model/model.json';
-        
-        console.log('Attempting to load model from:', modelUrl);
-        
-        // Add cache-busting parameter
-        const fullUrl = `${modelUrl}?v=${Date.now()}`;
-        const loadedModel = await tf.loadLayersModel(fullUrl);
-        
-        console.log('Model loaded successfully');
+        const loadedModel = await tf.loadLayersModel(modelUrl);
         setModel(loadedModel);
-        setStatus('Model ready');
+        setStatus('Model loaded successfully');
       } catch (error) {
         console.error('Error loading model:', error);
-        setStatus('Error loading model. If using an ad blocker, please disable it for this site.');
+        setStatus('Error loading model');
       }
     }
     loadModel();
