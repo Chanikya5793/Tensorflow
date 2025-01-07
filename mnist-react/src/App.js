@@ -55,8 +55,8 @@ function App() {
       <div className="status">{status}</div>
       <DrawingCanvas onPredict={handlePredict} />
       <div className="predictions">
-        {predictions.map((pred, index) => (
-          <div key={index} className="prediction-item">
+        {predictions.map((pred) => (
+          <div key={`digit-${pred.digit}`} className="prediction-item">
             <span>Digit {pred.digit}</span>
             <span>{(pred.probability * 100).toFixed(2)}%</span>
           </div>

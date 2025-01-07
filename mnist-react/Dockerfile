@@ -3,7 +3,6 @@ WORKDIR /app
 COPY package.json .
 RUN npm install
 COPY . .
-RUN npm run build
-RUN npm install -g serve
-EXPOSE 3001
-CMD ["serve", "-s", "build", "-l", "3001"]
+RUN npm run build && npm install -g serve
+EXPOSE 3501
+CMD ["serve", "-s", "build", "-l", "3501"]

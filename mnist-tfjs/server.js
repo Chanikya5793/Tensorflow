@@ -21,7 +21,7 @@ app.use('/src', express.static(path.join(__dirname, 'src'), {
 
 // Other routes or APIs if any
 
-const PORT = 3000;
+const PORT = 3500;  // Changed from 3000
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`TensorFlow server running at http://0.0.0.0:${PORT}`);
+  console.log(`Server running at http://0.0.0.0:${PORT}`);
 });
