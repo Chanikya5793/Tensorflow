@@ -122,11 +122,11 @@ async function trainAndSaveModel() {
         await model.fit(data.trainXs, data.trainYs, {
             batchSize: 32,
             validationData: [data.testXs, data.testYs],
-            epochs: 10,
+            epochs: 50,
             shuffle: true,
             callbacks: {
                 onEpochEnd: (epoch, logs) => {
-                    console.log(`Epoch ${epoch + 1}/${10}`);
+                    console.log(`Epoch ${epoch + 1}/${50}`);
                     console.log(`Loss: ${logs.loss.toFixed(4)}`);
                     console.log(`Accuracy: ${logs.acc.toFixed(4)}`);
                 }
