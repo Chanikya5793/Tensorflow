@@ -55,3 +55,15 @@ Files to add fot tensorflow and react app to docker
     ports:
       - '3501:3501'  # Changed both host and container ports
 
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      -
+    depends_on:
+      - tensorflow-mnist
+      - react-mnist
+    restart: always
